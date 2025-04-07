@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import { envs } from "./envs.config.js";
 
-const { connectDB } = envs;
+const { db } = envs;
 
-export const db = async () => {
+export const dbConnect = async () => {
     try {
-        await mongoose.connect(connectDB.uri)
+        await mongoose.connect(db.uri);
         console.log("Conectados a la base de datos de MongoDB");
     } catch (error) {
         console.error("Error al conectar a la base de datos de MongoDB", error);

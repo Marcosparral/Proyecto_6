@@ -1,10 +1,13 @@
 import express from 'express';
+
 import { envs } from './config/envs.config.js';
-import { db } from './config/db.config.js';
+import { dbConnect } from './config/db.config.js';
+
+import pizzasRouter from './routers/Pizzas.routes.js';
 
 const app = express();
 
-db();
+dbConnect();
 
 //Middlewares de CORS
 
@@ -13,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Middleawares de rutas
+app.use('/api/v1', pizzasRouter);
 
 //Middlewares de error
 
