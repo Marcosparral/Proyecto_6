@@ -1,8 +1,9 @@
-import { Pizzas } from "../models/Pizzas.model.js";
+import { getPizzaByIdService, getAllPeliculasServices } from "../services/pizzas.service.js";
 
-export const getAllPizzas = async (req, res) => {
+
+export const getAllPizzas = async (req, res, next) => {
     try {
-        const pizzas = await Pizzas.find();
+        const pizzas = await getAllPeliculasServices();
 
         res.status(200).json({
             message: "Estas son las pizzas que tenemos disponibles",
@@ -10,10 +11,21 @@ export const getAllPizzas = async (req, res) => {
             data: pizzas,
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: "Error al buscar las pizzas",
-            statusCode: 500,
-        });
-    }
+        next(error);
+    };
+};
+
+export const getPizzaById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const pizzas = await getPizzaByIdService(id);
+        res.status(200).json({
+            message: `Esta es la pizza con el id ${id}que tenemos disponible`,
+            statusCode: 200,
+            data: pizzas,
+        })
+        
+        } catch (error) {
+        next(error);
+    };
 };

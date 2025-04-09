@@ -4,6 +4,7 @@ import { envs } from './config/envs.config.js';
 import { dbConnect } from './config/db.config.js';
 
 import pizzasRouter from './routers/Pizzas.routes.js';
+import { errorHandler } from './middlewares/ErrorHandler.js';
 
 const app = express();
 
@@ -19,7 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1', pizzasRouter);
 
 //Middlewares de error
+app.use(errorHandler);
 
 app.listen(envs.port, () => {
     console.log(`Server is running on port ${envs.port}`);
-})
+});
