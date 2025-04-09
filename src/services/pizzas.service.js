@@ -33,3 +33,13 @@ export const getPizzaByIdService = async ( id ) => {
     }
 }
 
+export const createPizzasService = async (dataPizzas) => {
+    try {
+        const pelicula = await Pizzas.create(dataPizzas);
+
+        return pelicula;
+    } catch (error) {
+        throw new NotFoundError(
+            'Error al intentar crear la pizza', 500, error);
+    }
+}
