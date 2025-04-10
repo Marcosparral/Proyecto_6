@@ -7,6 +7,7 @@ const pizzasSchema = new Schema({
     tipo_masa: { type: String, required: true },
     valor: { type: Number, required: true },
     disponible: { type: Boolean, required: true },
+    isActive: { type: Boolean, default: true },
 }, { versionKey: false, timestamps: false });
 
 export const Pizzas = mongoose.model('pizzas', pizzasSchema);

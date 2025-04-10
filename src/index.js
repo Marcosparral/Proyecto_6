@@ -8,7 +8,7 @@ import { errorHandler } from './middlewares/ErrorHandler.js';
 
 const app = express();
 
-dbConnect();
+dbConnect( {updateDocs: true} );
 
 //Middlewares de CORS
 
@@ -23,5 +23,5 @@ app.use('/api/v1', pizzasRouter);
 app.use(errorHandler);
 
 app.listen(envs.port, () => {
-    console.log(`Server is running on port ${envs.port}`);
+    console.log(`Servidor corriendo en el puerto ${envs.port}`);
 });

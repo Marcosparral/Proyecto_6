@@ -1,17 +1,14 @@
-import { getPizzaByIdService, getAllPeliculasServices, createPizzasService } from "../services/pizzas.service.js";
-
+import { getPizzaByIdService, getAllPizzasServices, createPizzasService, updatePizzaByIdService, deletePizzaByIdService } from "../services/pizzas.service.js";
+import { responseTemplate } from "../utils/templates/Response.template.js";    
 
 export const getAllPizzas = async (req, res, next) => {
     try {
-        const pizzas = await getAllPeliculasServices();
+        const pizzas = await getAllPizzasServices();
 
-        res.status(200).json({
-            message: "Estas son las pizzas que tenemos disponibles",
-            statusCode: 200,
-            data: pizzas,
-        });
-    } catch (error) {
-        next(error);
+       responseTemplate(res, pizzas, 200, 'Pizzas encontradas con exito');
+
+        } catch (error) {
+            next(error);
     };
 };
 
@@ -19,31 +16,57 @@ export const getPizzaById = async (req, res, next) => {
     try {
         const { id } = req.params;
         const pizzas = await getPizzaByIdService(id);
-       
-        res.status(200).json({
-            message: `Esta es la pizza con el id ${id}que tenemos disponible`,
-            statusCode: 200,
-            data: pizzas,
-        })
+
+        responseTemplate(res, pizzas, 200, 
+            `Pizza con el id ${id} encontrada con exito`);
         
         } catch (error) {
-        next(error);
+            next(error);
     };
 };
 
 export const createPizzas = async (req, res, next) => {
     try {
-        const dataPizzas = req.body;
-        const pizzas = await createPizzasService(dataPizzas);
+        const dataPizza = req.body;
+        const pizza = await createPizzasService(dataPizza);
 
-        res.status(201).json({
-            message: 'Pizza creada con éxito',
-            statusCode: 201,
-            data: pizzas,
-        })
+        responseTemplate(res, pizza, 201, 
+            'Pizza creada con exito', 'Pizza creada con exito');
 
+        } catch (error) {
+            next(error);
+        
+    };
+};
+
+export const updatePizzaById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const dataPizza = req.body;
+
+        const [pizza, pizzaUpdated] = await updatePizzaByIdService(id, dataPizza);
+        const custom = {
+            oldData: pizza
+        };
+
+        responseTemplate(res, pizzaUpdated, 201, 
+            `Pizza con el id ${id} actualizada con exito`, 'Pizza actualizada con exito', custom);
+
+        } catch (error) {
+             next(error);
+        
+    };
+};
+
+export const deletePizzaById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const pizza = await deletePizzaByIdService(id);
+
+        responseTemplate(res, pizza, 200, 
+            `Pizza con el id ${id} eliminada con exito`, 'Pizza eliminada con exito');
     } catch (error) {
         next(error);
         
-    }
-}
+    };
+};

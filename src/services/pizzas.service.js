@@ -1,45 +1,78 @@
-import { NotFoundError } from "../errors/TypeError.js";
 import { Pizzas } from "../models/Pizzas.model.js";
+import { NotFoundError } from "../errors/TypeError.js";
+import { notFoundData } from "../utils/Validate.js";
 
-export const getAllPeliculasServices = async () => {
+export const getAllPizzasServices = async () => {
     try {
-        const pizzas = await Pizzas.find();
+        const pizzas = await Pizzas.find( { isActive: true } );
+         
+        notFoundData( pizzas, 
+            'UPS! No hay pizzas disponibles en este minuto', 
+            'Lamentablemente no encontramos las pizzas que buscas' );
+    
+        return pizzas;
 
-        if(pizzas.length === 0 || pizzas === null) {
-            throw new NotFoundError(
-                'UPS! No hay pizzas disponobles en este minuto', 
-                'Lamentablemente no encontramos las pizzas que buscas'
-            );
-        };
-
-    } catch (error) {
+    } catch ( error ) {
         throw new NotFoundError(
             'Error al intentar obtener las pizzas', 500, error);
-    }
-}
+    };
+};
 
 export const getPizzaByIdService = async ( id ) => {
     try {
-        const pizza = await Pizzas.findById(id);
-        if (!pizza) {
-            throw new NotFoundError(
-                `UPS! No pudimos encontrar la pizza con el id ${id}`, 
-                'Lamentablemente no encontramos la pizza que buscas'
-            );
-        }
+        const pizza = await Pizzas.findById( id, { isActive: true } );
+
+        notFoundData(pizza,
+            `UPS! No pudimos encontrar la pizza con el id ${ id }`,
+            'Lamentablemente no encontramos la pizza que buscas' )
+
         return pizza;
-    } catch (error) {
-        throw new NotFoundError(`Error al intentar obtener la pizza con el id ${id}`, 500, error);
-    }
-}
-
-export const createPizzasService = async (dataPizzas) => {
-    try {
-        const pelicula = await Pizzas.create(dataPizzas);
-
-        return pelicula;
-    } catch (error) {
+    } catch ( error ) {
         throw new NotFoundError(
-            'Error al intentar crear la pizza', 500, error);
-    }
-}
+            `Error al intentar obtener la pizza con el id ${ id }`, 500, error );
+    };
+};
+
+export const createPizzasService = async ( dataPizza ) => {
+    try {
+        const pizza = await Pizzas.create( dataPizza );
+
+        return pizza;
+    } catch ( error ) {
+        throw new NotFoundError(
+            'Error al intentar crear la pizza', 500, error );
+    };
+};
+
+export const updatePizzaByIdService = async ( id, dataPizza ) => {
+    try {
+        const pizza = await Pizzas.findOneAndUpdate( { _id: id, isActive: true }, dataPizza );
+
+        const pizzaUpdated = await Pizzas.findById(id, { isActive: true });
+
+        notFoundData( pizza,
+            `UPS! No pudimos encontrar la pizza con el id ${ id }`,
+            'Lamentablemente no encontramos la pizza que buscas')
+
+        return [ pizza, pizzaUpdated ];
+    } catch ( error ) {
+        throw new NotFoundError(
+            `Error al intentar actualizar la pizza con el ID ${ id }`, 500, error );
+        
+    };
+};
+
+export const deletePizzaByIdService = async ( id ) => {
+    try {
+        const pizza = await Pizzas.findByIdAndUpdate( id, { isActive: false } );
+
+        notFoundData(pizza,
+            `UPS! No pudimos encontrar la pizza con el id ${ id }`,
+            'Lamentablemente no encontramos la pizza que buscas' )
+
+        return pizza;
+    } catch ( error ) {
+        throw new NotFoundError(
+            `Error al intentar eliminar la pizza con el id ${ id }`, 500, error );
+    };
+};
