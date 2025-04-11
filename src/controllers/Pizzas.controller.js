@@ -1,11 +1,11 @@
-import { getPizzaByIdService, getAllPizzasServices, createPizzasService, updatePizzaByIdService, deletePizzaByIdService } from "../services/pizzas.service.js";
+import { getPizzaByIdService, getAllPizzasServices, createPizzasService, updatePizzaByIdService, deletePizzaByIdService, permaDeletePizzaByIdService } from "../services/pizzas.service.js";
 import { responseTemplate } from "../utils/templates/Response.template.js";    
 
 export const getAllPizzas = async (req, res, next) => {
     try {
         const pizzas = await getAllPizzasServices();
 
-       responseTemplate(res, pizzas, 200, 'Pizzas encontradas con exito');
+        responseTemplate(res, pizzas, 200, 'Pizzas encontradas con exito');
 
         } catch (error) {
             next(error);
@@ -31,7 +31,7 @@ export const createPizzas = async (req, res, next) => {
         const pizza = await createPizzasService(dataPizza);
 
         responseTemplate(res, pizza, 201, 
-            'Pizza creada con exito', 'Pizza creada con exito');
+            'Pizza creada con exito');
 
         } catch (error) {
             next(error);
@@ -44,9 +44,9 @@ export const updatePizzaById = async (req, res, next) => {
         const { id } = req.params;
         const dataPizza = req.body;
 
-        const [pizza, pizzaUpdated] = await updatePizzaByIdService(id, dataPizza);
+        const [pizzaOld, pizzaUpdated] = await updatePizzaByIdService(id, dataPizza);
         const custom = {
-            oldData: pizza
+            oldData: pizzaOld
         };
 
         responseTemplate(res, pizzaUpdated, 201, 
@@ -70,3 +70,16 @@ export const deletePizzaById = async (req, res, next) => {
         
     };
 };
+
+export const permaDeleteById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const pizza = await permaDeletePizzaByIdService(id);
+
+        responseTemplate(res, pizza, 200, 
+            `Pizza con el id ${id} eliminada permanentemente con exito`, 'Pizza eliminada permanentemente con exito');
+    } catch (error) {
+        next(error);
+        
+    }
+}

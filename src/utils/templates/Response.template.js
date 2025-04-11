@@ -5,6 +5,6 @@ export const responseTemplate = (res, data, statusCode, message, ...custom) => {
         message: message || 'Peticion procesada con exito',
         statusCode,
         data,
-        ...custom,
+        ...custom
     });
 };

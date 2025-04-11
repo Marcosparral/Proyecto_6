@@ -1,10 +1,10 @@
 import express from 'express';
 
-import { envs } from './config/envs.config.js';
-import { dbConnect } from './config/db.config.js';
+import { envs } from './src/config/envs.config.js';
+import { dbConnect } from './src/config/db.config.js';
 
-import pizzasRouter from './routers/Pizzas.routes.js';
-import { errorHandler } from './middlewares/ErrorHandler.js';
+import pizzasRouter from './src/routers/Pizzas.routes.js';
+import { errorHandler } from './src/middlewares/ErrorHandler.js';
 
 const app = express();
 
