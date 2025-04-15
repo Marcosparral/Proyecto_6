@@ -3,11 +3,23 @@ import { getAllPizzas, getPizzaById, createPizzas, updatePizzaById, deletePizzaB
 
 const router = Router();
 
-router.get('/pizzas', getAllPizzas);
-router.get('/pizzas/:id', getPizzaById);
-router.post('/pizzas/create/', createPizzas);
-router.put('/pizzas/update/:id', updatePizzaById);
-router.delete('/pizzas/delete/:id', deletePizzaById);
-router.delete('/pizzas/permadelete/:id', permaDeleteById)
+
+// // Endpoint para obtener todas las pizzas
+router.get('/', getAllPizzas);
+
+// // Endpoint para obtener una pizza por id
+router.get('/:id', getPizzaById);
+
+// // Endpoint para crear una nueva pizza
+router.post('/create/', createPizzas);
+
+// // Endpoint para actualizar una pizza por id
+router.put('/update/:id', updatePizzaById);
+
+// // Endpoint para eliminar una pizza por id
+router.delete('/delete/:id', deletePizzaById);
+
+// // Endpoint para eliminar permanentemente una pizza por id
+router.delete('/permadelete/:id', permaDeleteById)
 
 export default router;

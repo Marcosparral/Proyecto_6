@@ -8,6 +8,14 @@ const pizzasSchema = new Schema({
     valor: { type: Number, required: true },
     disponible: { type: Boolean, required: true },
     isActive: { type: Boolean, default: true },
-}, { versionKey: false, timestamps: false });
+}, {toJSON: {
+        transform: (doc, ret) => {
+            delete ret.isActive;
+            return ret;
+        }
+},
+
+    versionKey: false,
+    timestamps: false });
 
 export const Pizzas = mongoose.model('pizzas', pizzasSchema);

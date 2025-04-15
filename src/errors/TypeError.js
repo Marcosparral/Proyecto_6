@@ -22,4 +22,10 @@ export class InternalServerError extends CustomError {
     constructor(message, details) {
         super(message || 'Error interno del servidor', statusCode || 500, details);
     }
-}
+};
+
+export class AuthError extends CustomError {
+    constructor(message, statusCode, details) {
+        super(message || 'Error de autenticacion', statusCode || 401, details);
+    }
+};

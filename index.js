@@ -3,7 +3,7 @@ import express from 'express';
 import { envs } from './src/config/envs.config.js';
 import { dbConnect } from './src/config/db.config.js';
 
-import pizzasRouter from './src/routers/Pizzas.routes.js';
+import apiRouter from './src/routers/index.router.js';
 import { errorHandler } from './src/middlewares/ErrorHandler.js';
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Middleawares de rutas
-app.use('/api/v1', pizzasRouter);
+app.use('/api/v1', apiRouter);
 
 //Middlewares de error
 app.use(errorHandler);

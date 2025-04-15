@@ -5,8 +5,7 @@ import { notFoundData, notFoundAllData } from "../utils/Validate.js";
 
 export const getAllPizzasServices = async () => {
     try {
-        const pizzas = await Pizzas.find( { isActive: true } );
-        console.log( pizzas );
+        const pizzas = await Pizzas.find( { isActive: true } ).select('-isAcive');
          
         notFoundAllData(pizzas, 
             'UPS! No hay pizzas disponibles en este minuto', 
