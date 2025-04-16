@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import { getAllPizzas, getPizzaById, createPizzas, updatePizzaById, deletePizzaById, permaDeleteById } from '../controllers/Pizzas.controller.js';
+import { authMiddleware } from '../middlewares/auth.middleware.js';
+
 
 const router = Router();
 
 
 // // Endpoint para obtener todas las pizzas
-router.get('/', getAllPizzas);
+router.get('/',  authMiddleware, getAllPizzas);
 
 // // Endpoint para obtener una pizza por id
 router.get('/:id', getPizzaById);

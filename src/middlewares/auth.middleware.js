@@ -23,7 +23,7 @@ export const authMiddleware = (req, res, next) => {
         next();
     } catch (error) {
         throw new AuthError(
-            'Error al intentar autenticar el usuario', 500, error
+            'Token inválido o inesperado', 500, error
         );
     }
 }
