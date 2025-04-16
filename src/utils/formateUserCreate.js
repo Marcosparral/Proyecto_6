@@ -1,16 +1,15 @@
 import { ValidationError } from "../errors/TypeError.js";
 
-export const formateUserCreate = (hashPassword, ...rest) => {
+export const formateUserCreate = (hashedPassword, ...rest) => {
     const [
         nombre,
         apellido,
         telefono,
         email,
-        password,
         isAdmin = false,
  ] = rest;
 
-    if (!nombre || !apellido || !telefono || !email || !password) {
+    if (!nombre || !apellido || !telefono || !email ) {
         throw new ValidationError(
             'Error al intentar registrar el usuario',
             'Faltan datos obligatorios para registrar el usuario'
@@ -22,7 +21,7 @@ export const formateUserCreate = (hashPassword, ...rest) => {
         apellido,
         telefono,
         email,
-        password: hashPassword,
+        password: hashedPassword,
         isAdmin,
     };
-}
+};

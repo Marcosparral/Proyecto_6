@@ -1,5 +1,5 @@
 import { responseTemplate } from "../utils/templates/Response.template.js";
-import { registerService, getAllUsersService, loginServices } from "../services/auth.service.js";
+import { registerService, getAllUsersService, loginService } from "../services/auth.service.js";
 
 export const register = async (req, res, next) => {
     try {
@@ -17,6 +17,19 @@ export const register = async (req, res, next) => {
     };
 };
 
+export const login = async (req, res, next) => {
+    try {
+        const [ user, token ] = await loginService(req.body)
+        const custom = {
+            token
+        };
+        responseTemplate(res, user, 200, 'Usuario logueado con exito', custom);
+    } catch (error) {
+        next(error);
+        };
+
+};
+
 export const getAllUsers = async (req, res, next) => {
     try {
        const users = await getAllUsersService(); 
@@ -31,15 +44,3 @@ export const getAllUsers = async (req, res, next) => {
     };
 };
 
-export const login = async (req, res, next) => {
-    try {
-        const [ user, token ] = await loginServices(req.body)
-        const custom = {
-            token
-        };
-        responseTemplate(res, user, 200, 'Usuario logueado con exito', custom);
-    } catch (error) {
-        next(error);
-        };
-
-};
