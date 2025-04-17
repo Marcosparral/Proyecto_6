@@ -1,5 +1,5 @@
 import { responseTemplate } from "../utils/templates/Response.template.js";
-import { registerService, getAllUsersService, loginService } from "../services/auth.service.js";
+import { registerService, getAllUsersService, loginService, updateUserByIdService } from "../services/auth.service.js";
 
 export const register = async (req, res, next) => {
     try {
@@ -40,6 +40,25 @@ export const getAllUsers = async (req, res, next) => {
             message: 'Error al intentar obtener los usuarios',
             error: error.message
         });
+        
+    };
+};
+
+export const updateUserById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const dataUser = req.body;
+
+        const [oldUser, newUser] = await updateUserByIdService(id, dataUser);
+        const custom = {
+            oldData: oldUser
+        };
+
+        responseTemplate(res, newUser, 201, 
+            `Pizza con el id ${id} actualizada con exito`, 'Pizza actualizada con exito', custom);
+
+        } catch (error) {
+             next(error);
         
     };
 };

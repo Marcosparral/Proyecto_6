@@ -81,3 +81,22 @@ export const getAllUsersService = async () => {
     };
 };
 
+
+export const updateUserByIdService = async ( id, dataUser ) => {
+    try {
+        const userOld = await User.findOneAndUpdate( { _id: id, isActive: true }, dataUser );
+
+        const newUser = await User.findById( id, { isActive: true } );
+
+        notFoundData( userOld,
+            `UPS! NO pudimos actualizar al usuario con el id ${ id }`,
+            'No encontramos al usuario que buscas' )
+
+        return [ userOld, newUser ];
+    } catch ( error ) {
+        throw new NotFoundError(
+            `Error al intentar actualizar la pizza con el ID ${ id }`, 500, error );
+        
+    };
+};
+

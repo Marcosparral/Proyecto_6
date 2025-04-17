@@ -15,9 +15,9 @@ export const getAllPizzas = async (req, res, next) => {
 export const getPizzaById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const pizzas = await getPizzaByIdService(id);
+        const pizza = await getPizzaByIdService(id);
 
-        responseTemplate(res, pizzas, 200, 
+        responseTemplate(res, pizza, 200, 
             `Pizza con el id ${id} encontrada con exito`);
         
         } catch (error) {
@@ -82,4 +82,5 @@ export const permaDeleteById = async (req, res, next) => {
         next(error);
         
     }
-}
+};
+
