@@ -50,13 +50,13 @@ export const updatePizzaByIdService = async ( id, dataPizza ) => {
     try {
         const pizzaOld = await Pizzas.findOneAndUpdate( { _id: id, isActive: true }, dataPizza );
 
-        const pizzaUpdated = await Pizzas.findById( id, { isActive: true } );
+        const pizzaUpdated = await Pizzas.findById( id, dataPizza );
 
         notFoundData( pizzaOld,
             `UPS! No pudimos encontrar la pizza con el id ${ id }`,
             'Lamentablemente no encontramos la pizza que buscas')
 
-        return [ pizzaOld, pizzaUpdated ];
+        return [ pizzaUpdated, pizzaOld ];
     } catch ( error ) {
         throw new NotFoundError(
             `Error al intentar actualizar la pizza con el ID ${ id }`, 500, error );

@@ -44,13 +44,13 @@ export const updatePizzaById = async (req, res, next) => {
         const { id } = req.params;
         const dataPizza = req.body;
 
-        const [pizzaOld, pizzaUpdated] = await updatePizzaByIdService(id, dataPizza);
+        const [pizzaUpdated, pizzaOld] = await updatePizzaByIdService(id, dataPizza);
         const custom = {
             oldData: pizzaOld
         };
 
         responseTemplate(res, pizzaUpdated, 201, 
-            `Pizza con el id ${id} actualizada con exito`, 'Pizza actualizada con exito', custom);
+            `Pizza con el id ${id} actualizada con exito`, custom);
 
         } catch (error) {
              next(error);
@@ -64,7 +64,7 @@ export const deletePizzaById = async (req, res, next) => {
         const pizza = await deletePizzaByIdService(id);
 
         responseTemplate(res, pizza, 200, 
-            `Pizza con el id ${id} eliminada con exito`, 'Pizza eliminada con exito');
+            `Pizza con el id ${id} eliminada con exito`,);
     } catch (error) {
         next(error);
         
@@ -77,7 +77,7 @@ export const permaDeleteById = async (req, res, next) => {
         const pizza = await permaDeletePizzaByIdService(id);
 
         responseTemplate(res, pizza, 200, 
-            `Pizza con el id ${id} eliminada permanentemente con exito`, 'Pizza eliminada permanentemente con exito');
+            `Pizza con el id ${id} eliminada permanentemente con exito`,);
     } catch (error) {
         next(error);
         
