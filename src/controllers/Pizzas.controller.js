@@ -1,5 +1,6 @@
 import { getPizzaByIdService, getAllPizzasServices, createPizzasService, updatePizzaByIdService, deletePizzaByIdService, permaDeletePizzaByIdService } from "../services/pizzas.service.js";
 import { responseTemplate } from "../utils/templates/Response.template.js";    
+import { buildFileUrl } from "../utils/files/BuildFileUrl.js";
 
 export const getAllPizzas = async (req, res, next) => {
     try {
@@ -27,8 +28,15 @@ export const getPizzaById = async (req, res, next) => {
 
 export const createPizzas = async (req, res, next) => {
     try {
-        const dataPizza = req.body;
-        const pizza = await createPizzasService(dataPizza);
+        let imageUrl = '';
+        if (req.file) imageUrl = buildFileUrl(req, req.file.filename, 'pizzas');
+
+        const dataPizzas = {
+            ...req.body,
+            imagen: imageUrl
+        };
+
+        const pizza = await createPizzasService(dataPizzas);
 
         responseTemplate(res, pizza, 201, 
             'Pizza creada con exito');

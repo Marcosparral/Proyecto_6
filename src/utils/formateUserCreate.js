@@ -6,6 +6,7 @@ export const formateUserCreate = (hashedPassword, ...rest) => {
         apellido,
         telefono,
         email,
+        imagen,
         isAdmin = false,
  ] = rest;
 
@@ -22,6 +23,7 @@ export const formateUserCreate = (hashedPassword, ...rest) => {
         telefono,
         email,
         password: hashedPassword,
+        imagen: imagen || null,
         isAdmin,
     };
 };

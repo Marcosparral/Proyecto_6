@@ -29,3 +29,15 @@ export class AuthError extends CustomError {
         super(message || 'Error de autenticacion', statusCode || 401, details);
     }
 };
+
+export class FileServiceError extends CustomError {
+    constructor(message, details) {
+        super(message || 'Error en el servicio de archivos', statusCode || 400, details);
+    }
+};
+
+export class PaymentError extends CustomError {
+    constructor(message, details) {
+        super(message || 'Error en el servicio de pagos', statusCode || 400, details);
+    }
+}

@@ -1,0 +1,1 @@
+export const URL_IMAGE_REGEX = /^(https?:\/\/.*\.(jpg|jpeg|png|webp|gif))$/i;

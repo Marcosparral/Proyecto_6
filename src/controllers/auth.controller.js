@@ -1,9 +1,16 @@
 import { responseTemplate } from "../utils/templates/Response.template.js";
 import { registerService, getAllUsersService, loginService, updateUserByIdService } from "../services/auth.service.js";
+import { buildFileUrl } from "../utils/files/BuildFileUrl.js";
 
 export const register = async (req, res, next) => {
     try {
-        const userData = req.body;
+        let imageUrl = '';
+        if (req.file) imageUrl = buildFileUrl(req, req.file.filename, 'users');
+
+        const userData = {
+            ...req.body,
+            imagen: imageUrl
+        };
         const user = await registerService(userData);
         responseTemplate(res, user, 201, 
             'Usuario registrado con exito');

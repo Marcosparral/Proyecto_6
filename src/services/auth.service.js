@@ -16,8 +16,9 @@ export const registerService = async ({
     nombre,
     apellido, 
     telefono, 
-    email, 
+    email,
     password, 
+    imagen ,
     isAdmin = false }) => {
     try {
         const hashedPassword = await hashPassword(password);
@@ -28,6 +29,7 @@ export const registerService = async ({
             apellido,
             telefono,
             email,
+            imagen,
             isAdmin
         )
         const user = await User.create(userData);
